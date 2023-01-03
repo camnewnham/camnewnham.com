@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 
-export function PageHeader({ title }: { title: string }) {
+export function PageHeader({ }: {}) {
 
     return <header id="nav" className="notion" style={{ backgroundColor: 'white' }}>
         <div style={{

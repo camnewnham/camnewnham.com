@@ -31,7 +31,7 @@ export const NotionPage = ({
                 <title>{title} </title>
             </Head>
 
-            <PageHeader title={title} />
+            <PageHeader />
 
             < NotionRenderer
                 recordMap={recordMap}
