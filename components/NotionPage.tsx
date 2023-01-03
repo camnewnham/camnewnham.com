@@ -7,8 +7,8 @@ import { NotionRenderer } from 'react-notion-x'
 
 import { PageHeader } from './PageHeader'
 
-import Code from 'react-notion-x/build/third-party/code';
-import Collection from 'react-notion-x/build/third-party/collection';
+import { Code } from 'react-notion-x/build/third-party/code';
+import { Collection } from 'react-notion-x/build/third-party/collection';
 
 export const NotionPage = ({
     recordMap,
