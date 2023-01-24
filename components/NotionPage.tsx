@@ -42,8 +42,8 @@ export const NotionPage = ({
         components={{
           Code,
           Collection,
-          nextImage: Image,
-          nextLink: Link,
+          Image,
+          Link,
         }}
       />
     </>
