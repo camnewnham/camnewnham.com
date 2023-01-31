@@ -1,43 +1,47 @@
 .notion-collection-header {
-    visibility:hidden;
-    width:0px;
-    height:0px;
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 
 .notion-collection-page-properties {
-    visibility:hidden;
-    width:0px;
-    height:0px;
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 
 .notion-page-icon {
-    visibility:hidden;
-    width:0px;
-    height:0px;
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 
 .notion-page-has-icon {
-    margin-top: 0px!important;
+  margin-top: 0px !important;
 }
 
 .notion-collection-card {
-    box-shadow:none;
-    border: 1px solid lightgrey;
+  box-shadow: none;
+  border: 1px solid lightgrey;
 }
 
 .notion-page-icon-inline {
-    visibility:hidden;
-    width:0px;
-    height:0px;
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 
 .notion-gallery-grid {
-    border-top: none;
+  border-top: none;
 }
 
 .notion-header {
-    visibility:hidden;
-    width:0px;
-    height:0px;
-    min-height:0px;
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
+  min-height: 0px;
+}
+
+.notion-collection-card-cover img {
+  object-fit: cover;
 }

@@ -1,30 +1,56 @@
-import * as React from 'react'
+import * as React from "react";
 
-import { ExtendedRecordMap } from 'notion-types'
+import { ExtendedRecordMap } from "notion-types";
+import { GetStaticProps, GetStaticPaths } from "next";
 
-import notion from '../lib/notion'
-import { NotionPage } from '../components/NotionPage'
-import { rootNotionPageId } from '../lib/config'
+import * as notion from "../lib/notion";
+import { NotionPage } from "../components/NotionPage";
+import { rootNotionPageId } from "../lib/config";
+import { defaultMapPageUrl } from "react-notion-x";
+import { getAllPagesInSpace } from "notion-utils";
 
-export const getStaticProps = async (context: { params: { pageId: string } }) => {
-    const pageId = (context.params.pageId as string) || rootNotionPageId
-    const recordMap = await notion.getPage(pageId)
+const staticPaths = true;
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const pageId = (context?.params?.pageId ?? rootNotionPageId) as string;
+  const recordMap = await notion.getPage(pageId);
+
+  return {
+    props: {
+      recordMap,
+    },
+    revalidate: 600,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  if (staticPaths) {
+    const mapPageUrl = defaultMapPageUrl(rootNotionPageId);
+    const pages = await getAllPagesInSpace(
+      rootNotionPageId,
+      undefined,
+      notion.getPage,
+      {
+        traverseCollections: false,
+      }
+    );
+
+    const paths = Object.keys(pages)
+      .map((pageId) => mapPageUrl(pageId))
+      .filter((path) => path && path !== "/");
 
     return {
-        props: {
-            recordMap
-        },
-        revalidate: 10
-    }
-}
-
-export async function getStaticPaths() {
+      paths,
+      fallback: true,
+    };
+  } else {
     return {
-        paths: [],
-        fallback: true
-    }
-}
+      paths: [],
+      fallback: true,
+    };
+  }
+};
 
 export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
-    return <NotionPage recordMap={recordMap} rootPageId={rootNotionPageId} />
+  return <NotionPage recordMap={recordMap} />;
 }
