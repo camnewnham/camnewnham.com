@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"firebase emulators:start --only functions,storage\" \"cd functions && tsc --watch\" ",
+    "dev": "concurrently \"firebase emulators:start --only functions,storage,firestore,hosting\" \"cd functions && tsc --watch\" ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,6 +15,7 @@
     "@types/react-dom": "18.0.10",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
+    "firebase-admin": "^11.5.0",
     "next": "13.1.1",
     "node-fetch": "^3.3.0",
     "notion-client": "^6.15.6",

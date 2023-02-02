@@ -4,8 +4,6 @@ module.exports = {
   staticPageGenerationTimeout: 300,
   distDir: ".next",
   images: {
-    loader: "custom",
-    loaderFile: "./imageLoader.ts",
     remotePatterns: [
       {
         protocol: "https",

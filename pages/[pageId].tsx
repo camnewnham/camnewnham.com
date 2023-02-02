@@ -5,11 +5,11 @@ import { GetStaticProps, GetStaticPaths } from "next";
 
 import * as notion from "../lib/notion";
 import { NotionPage } from "../components/NotionPage";
-import { rootNotionPageId } from "../lib/config";
+import { isDev, rootNotionPageId } from "../lib/config";
 import { defaultMapPageUrl } from "react-notion-x";
 import { getAllPagesInSpace } from "notion-utils";
 
-const staticPaths = true;
+const GENERATE_STATIC_PATHS = false;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const pageId = (context?.params?.pageId ?? rootNotionPageId) as string;
@@ -18,13 +18,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       recordMap,
+      id: pageId,
     },
-    revalidate: 600,
+    revalidate: 3600,
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  if (staticPaths) {
+  if (GENERATE_STATIC_PATHS && !isDev) {
     const mapPageUrl = defaultMapPageUrl(rootNotionPageId);
     const pages = await getAllPagesInSpace(
       rootNotionPageId,
@@ -52,6 +53,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 };
 
-export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
-  return <NotionPage recordMap={recordMap} />;
+export default function Page({
+  recordMap,
+  id,
+}: {
+  recordMap: ExtendedRecordMap;
+  id: string;
+}) {
+  return <NotionPage recordMap={recordMap} id={id} />;
 }

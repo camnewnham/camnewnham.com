@@ -45,3 +45,7 @@
 .notion-collection-card-cover img {
   object-fit: cover;
 }
+
+.notion-asset-wrapper-video {
+  max-width: 688px;
+}

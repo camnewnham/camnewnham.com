@@ -19,5 +19,5 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
-  return <NotionPage recordMap={recordMap} />;
+  return <NotionPage recordMap={recordMap} id={undefined} />;
 }
