@@ -6,6 +6,10 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import * as notion from "../lib/notion";
 import { NotionPage } from "../components/NotionPage";
 import { rootNotionPageId } from "../lib/config";
+import { defaultMapPageUrl } from "react-notion-x";
+import { getAllPagesInSpace } from "notion-utils";
+
+const staticPaths = true;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const pageId = (context?.params?.pageId ?? rootNotionPageId) as string;
@@ -20,10 +24,32 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
+  if (staticPaths) {
+    const mapPageUrl = defaultMapPageUrl(rootNotionPageId);
+    const pages = await getAllPagesInSpace(
+      rootNotionPageId,
+      undefined,
+      notion.getPage,
+      {
+        traverseCollections: false,
+        concurrency: 1,
+      }
+    );
+
+    const paths = Object.keys(pages)
+      .map((pageId) => mapPageUrl(pageId))
+      .filter((path) => path && path !== "/");
+
+    return {
+      paths,
+      fallback: true,
+    };
+  } else {
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
 };
 
 export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
