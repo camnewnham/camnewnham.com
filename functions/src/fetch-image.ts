@@ -1,6 +1,6 @@
 // Image resizing based on https://github.com/firebase/extensions/blob/master/storage-resize-images/functions/src/resize-image.ts
 
-import { https } from "firebase-functions";
+import { runWith } from "firebase-functions";
 import { getStorage } from "firebase-admin/storage";
 import { getFirestore } from "firebase-admin/firestore";
 import sharp from "sharp";
@@ -17,7 +17,10 @@ export const IMAGES_PATH = "images";
 const bucket = getStorage().bucket();
 const db = getFirestore();
 
-export const fetchImage = https.onRequest(async (req, res): Promise<any> => {
+export const fetchImage = runWith({
+  memory: "4GB",
+  timeoutSeconds: 300,
+}).https.onRequest(async (req, res): Promise<any> => {
   const query = req.query as any as NextImageRequest;
 
   if (!query.src || !query.w || !query.q) {
@@ -54,7 +57,7 @@ export const fetchImage = https.onRequest(async (req, res): Promise<any> => {
     return res.redirect(301, storageFile.publicUrl());
   } else {
     // while we process the image, send the redirect. They can have the full image first...
-
+    console.info("Processing image: " + imgUrl);
     res.redirect(302, query.src);
 
     const img = new Uint8Array(
