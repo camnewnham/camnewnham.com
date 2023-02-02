@@ -51,11 +51,11 @@ export const fetchImage = https.onRequest(async (req, res): Promise<any> => {
   var storageFile = bucket.file(storagePath);
   if ((await storageFile.exists())[0]) {
     // We have it already.
-    return res.redirect(storageFile.publicUrl());
+    return res.redirect(301, storageFile.publicUrl());
   } else {
     // while we process the image, send the redirect. They can have the full image first...
 
-    res.redirect(query.src);
+    res.redirect(301, query.src);
 
     const img = new Uint8Array(
       await (await fetch(imgUrl.toString())).arrayBuffer()
