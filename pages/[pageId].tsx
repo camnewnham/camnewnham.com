@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       recordMap,
       id: pageId,
     },
-    revalidate: 3600,
+    revalidate: 600,
   };
 };
 
