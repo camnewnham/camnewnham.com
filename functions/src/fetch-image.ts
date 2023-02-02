@@ -55,7 +55,7 @@ export const fetchImage = https.onRequest(async (req, res): Promise<any> => {
   } else {
     // while we process the image, send the redirect. They can have the full image first...
 
-    res.redirect(301, query.src);
+    res.redirect(302, query.src);
 
     const img = new Uint8Array(
       await (await fetch(imgUrl.toString())).arrayBuffer()
