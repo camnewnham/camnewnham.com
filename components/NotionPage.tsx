@@ -13,6 +13,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 import { mapImageUrl } from "../lib/reshost-images";
+import { useRouter } from "next/router";
+import { Loading } from "./Loading";
 
 const ImageOverride = (props: any) => {
   const { width, height, fill, layout, objectFit, style, alt, ...other } =
@@ -41,14 +43,17 @@ export const NotionPage = ({
   recordMap: ExtendedRecordMap;
   id?: string;
 }) => {
-  const title = recordMap && getPageTitle(recordMap);
+  const router = useRouter();
+  const title = !router.isFallback && getPageTitle(recordMap);
 
   useEffect(() => {
     if (!id || !title) return;
     window.history.pushState("", "", `/${id}#${title.replaceAll(" ", "_")}`);
   }, [title, id]);
 
-  if (!recordMap) return null;
+  if (router.isFallback) {
+    return <Loading />;
+  }
 
   return (
     <>
