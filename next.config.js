@@ -14,6 +14,26 @@ module.exports = {
         hostname: "**.amazonaws.com",
         pathname: "/secure.notion-static.com/**",
       },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        pathname: "/notionhomepage.appspot.com/**",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "9199",
+      },
     ],
+  },
+  webpack: (config) => {
+    config.resolve.fallback = {
+      fs: false,
+      child_process: false,
+      net: false,
+      tls: false,
+    };
+
+    return config;
   },
 };

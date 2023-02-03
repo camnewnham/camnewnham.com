@@ -12,7 +12,7 @@ import { Collection } from "react-notion-x/build/third-party/collection";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
-import { imageLoader } from "../lib/imageLoader";
+import { mapImageUrl } from "../lib/reshost-images";
 
 const ImageOverride = (props: any) => {
   const { width, height, fill, layout, objectFit, style, alt, ...other } =
@@ -25,7 +25,6 @@ const ImageOverride = (props: any) => {
       fill={false}
       alt={alt ?? ""}
       sizes="(min-width: 688px) 688px, 100vw"
-      loader={imageLoader}
       style={{
         ...style,
         position: "relative",
@@ -63,9 +62,9 @@ export const NotionPage = ({
         recordMap={recordMap}
         fullPage={true}
         darkMode={false}
-        previewImages={true}
         forceCustomImages={true} // See https://github.com/NotionX/react-notion-x/blob/16d1870029d898a9189ab6c6ddc143b795f1a592/packages/react-notion-x/src/components/lazy-image.tsx#L144-L152
         isImageZoomable={false}
+        mapImageUrl={mapImageUrl}
         components={{
           Code,
           Collection,
